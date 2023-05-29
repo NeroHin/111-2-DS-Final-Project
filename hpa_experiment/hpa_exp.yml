@@ -1,4 +1,4 @@
-apiVersion: autoscaling/v2beta2
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: ticketing-api
@@ -8,11 +8,24 @@ spec:
     kind: Deployment
     name: ticketing-api
   minReplicas: 1
-  maxReplicas: 10
+  maxReplicas: 15
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 80
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 5  # Reduce this value to scale up faster
+      policies:
+        - type: Percent
+          value: 50  # Increase this value to scale up faster
+          periodSeconds: 15
+    scaleDown:
+      stabilizationWindowSeconds: 15
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 15

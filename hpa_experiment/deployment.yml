@@ -14,9 +14,15 @@ spec:
     spec:
       containers:
       - name: ticketing-api
-        image: [YOUR_DOCKERHUB_USERNAME]/ticketing-api:latest
+        image: nerochun/ticketing-api:latest
+        resources:
+          requests:
+            # Reserve 200 milli cores for this pod
+            cpu: 200m
+            memory: 200Mi
         ports:
         - containerPort: 8000
+          protocol: TCP
 ---
 apiVersion: v1
 kind: Service
