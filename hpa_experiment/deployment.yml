@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ticketing-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ticketing-api
+  template:
+    metadata:
+      labels:
+        app: ticketing-api
+    spec:
+      containers:
+      - name: ticketing-api
+        image: [YOUR_DOCKERHUB_USERNAME]/ticketing-api:latest
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketing-api-service
+spec:
+  selector:
+    app: ticketing-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
