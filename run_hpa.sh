@@ -18,7 +18,7 @@ kubectl create -f hpa.yml
 
 
 # # port-forward to access the service
-# kubectl port-forward service/random-generator 8888:80
+kubectl port-forward service/random-generator 8888:80
 
 # # while true, fetch the service: localhost:8888 with curl for 100 times / second
 # while true; do curl localhost:8888; sleep 0.000000001; done
